@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "victor",
+    "password": null,
+    "database": "hotel_ticketing_dev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "victor",
+    "password": null,
+    "database": "hotel_ticketing_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "victor",
+    "password": null,
+    "database": "hotel_ticketing_prod",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
