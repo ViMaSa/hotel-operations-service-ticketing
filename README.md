@@ -1,50 +1,76 @@
-# Product Requirement Document (PRD)
-## Overview
-This document outlines the requirements for a web application with a Vue.js frontend, an Express.js backend, and a PostgreSQL database. The frontend will use Bootstrap and Font Awesome for styling. The project uses a monorepository structure to house both frontend and backend components.
+# Hotel Operations Service Ticketing System - PRD
 
-## Frontend
-### Technical Requirements
-- **Framework:** Vue.js
-- **Routing:** Vue Router
-- **State Management:** Vuex
-- **UI Components:** Bootstrap-Vue
-- **Icons:** Font Awesome (using @fortawesome/vue-fontawesome)
+## Introduction
+The Hotel Operations Service Ticketing System aims to facilitate the hotel's operations team in managing and organizing service requests or issues reported by guests during their stay. This document outlines the system requirements, features, infrastructure decisions, architectural choices, and other key components.
 
-### Dependencies
-- **vue:** Core Vue.js library
-- **vue-router:** For handling frontend routing
-- **vuex:** For state management
-- **bootstrap:** Bootstrap framework for styling
-- **bootstrap-vue:** Vue components styled with Bootstrap
-- **@fortawesome/fontawesome-svg-core:** Core Font Awesome library
-- **@fortawesome/free-solid-svg-icons:** Set of solid icons from Font Awesome
-- **@fortawesome/vue-fontawesome:** Vue component for Font Awesome
+## Objective
+Provide an intuitive, scalable, and efficient system to manage guest service requests, improving the overall guest experience.
 
-## Backend
-### Technical Requirements
-- **Framework:** Express.js
-- **Database:** PostgreSQL
-- **ORM:** Sequelize
-- **Middleware:** CORS, Helmet, Morgan
+## Target Users
+Hotel operations staff, including managers, receptionists, housekeepers, and maintenance teams.
 
-### Dependencies
-- **express:** Core Express.js library
-- **pg:** PostgreSQL client for Node.js
-- **pg-hstore:** Serializing and deserializing JSON data for PostgreSQL
-- **sequelize:** Sequelize ORM
-- **sequelize-cli:** CLI tools for Sequelize
-- **cors:** Middleware for enabling CORS
-- **helmet:** Middleware for securing Express apps by setting various HTTP headers
-- **morgan:** Logging middleware for Express.js
+## Requirements
 
-### Database
-- **Database System:** PostgreSQL
+### Infrastructure
 
-### Security Considerations
-- Sensitive database configuration, such as username, password, and database name, should be stored in .env files and should not be committed to version control systems like Git.
+- **Monorepository Approach**: All services, both frontend and backend, will reside in the same GitHub repository.
 
-### Monorepository Structure
-- The project uses a monorepository structure, containing both frontend and backend directories. Shared configurations, like ESLint and Prettier, are managed at the root level.
+- **Backend**: Node.js with Express.js for the API layer.
+
+- **Database**: PostgreSQL.
+  - Managed and interacted with through Sequelize ORM.
+  - Secure practices implemented by storing sensitive database connection details in a `.env` file.
+
+- **Frontend**: Vue.js.
+
+### Architecture
+
+- **MVC Design**: Following the Model-View-Controller (MVC) design pattern for clarity, maintainability, and scalability.
+
+### Models
+
+#### Ticket Model
+  - ID (auto-incremented primary key)
+  - Priority (integer)
+  - Guest First Name (string)
+  - Guest Last Name (string)
+  - Room Number (integer)
+  - Check-in Date (date)
+  - Ticket Request Type (string)
+  - Description (text)
+  - Status (string with default as "Open")
+
+### Features
+
+#### CRUD Operations for Tickets
+
+- **Create**: Staff can register new tickets based on guest reports.
+- **Read**: Ability to view a list of all tickets or view details of a specific ticket.
+- **Update**: Modify ticket details as required.
+- **Delete**: Remove tickets that are no longer needed or were created in error.
+
+### Codebase Organization
+
+- **Backend**:
+
+  - `models/`: Contains Sequelize models, e.g., `Ticket.js`.
+  - `controllers/`: Logic for handling different routes, e.g., `ticketController.js` for ticket-related operations.
+  - `routes/`: Route definitions. An `index.js` aggregates all routes for easy import.
+  - `config/`: Configuration files, including the Sequelize setup.
+
+- **Frontend**:
+
+  - Development details to be outlined once Vue.js setup and development begins.
 
 ### Future Considerations
-- **Docker:** Consider using Docker for easier deployment and scalability in the future. Docker can containerize the application and its dependencies, making it easier to manage and deploy.
+
+- User authentication for staff members.
+- Associating tickets with a guest model for better data structure.
+- Implementing middleware for error handling and validation.
+- Advanced features like notification systems for the status of tickets, analytics on ticket types, etc.
+
+## Other Notes
+
+- Considering future expansion and integration with other hotel systems.
+- Ensuring responsive design to accommodate usage on tablets or mobile devices by the staff.
+- Implementing best practices for code structure, database design, and UI/UX.
