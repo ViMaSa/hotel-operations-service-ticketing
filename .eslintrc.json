@@ -1,11 +1,13 @@
 {
     "env": {
         "node": true,
-        "es2021": true
+        "es2021": true,
+        "jest": true
     },
     "extends": [
         "eslint:recommended",
-        "prettier"
+        "prettier",
+        "plugin:jest/recommended"
     ],
     "overrides": [
     ],
@@ -15,23 +17,29 @@
     },
     "plugins": [
         "prettier",
-        "vue"
+        "vue",
+        "jest"
     ],
     "rules": {
         "indent": [
             "error",
             2
         ],
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error",
         "linebreak-style": [
             "error",
             "unix"
         ],
+        "prettier/prettier": [
+          "error"
+        ],
         "quotes": [
             "error",
             "double"
-        ],
-        "prettier/prettier": [
-          "error"
         ],
         "semi": [
             "error",

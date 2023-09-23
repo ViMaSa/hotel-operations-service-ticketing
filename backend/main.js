@@ -25,16 +25,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", allRoutes);
 
-// Test database connection
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Database connected.");
-  })
-  .catch((err) => {
-    console.error("Unable to connect to the database:", err);
-  });
+if (require.main === module) {
+  // Test database connection
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log("Database connected.");
+    })
+    .catch((err) => {
+      console.error("Unable to connect to the database:", err);
+    });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
