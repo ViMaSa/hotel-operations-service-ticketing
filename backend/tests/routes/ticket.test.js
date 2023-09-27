@@ -2,6 +2,7 @@ const request = require("supertest");
 const app = require("../../main");
 
 describe("Ticket Route", () => {
+  const invalidId = -1;
   let newTicketId;
 
   describe("POST /tickets", () => {
@@ -43,7 +44,29 @@ describe("Ticket Route", () => {
       expect(response.statusCode).toBe(200);
       expect(response.body.id).toEqual(newTicketId);
     });
+
+    it("Should return error fetching ticket by id that does not exist", async() => {
+      const response = await request(app).get(`/tickets/${invalidId}`);
+
+      expect(response.statusCode).toBe(404);
+      expect(response.body.message).toBe("Ticket not found");
+    })
   });
+
+  describe("PUT /ticket/:id", () => {
+    it("Should return update ticket by id", async () => {
+      const updateDetail = {
+        guest_first_name: "Jason",
+      }
+
+      const response = await request(app)
+        .put(`/tickets/${newTicketId}`)
+        .send(updateDetail);
+
+      expect(response.statusCode).toBe(200);
+      expect(response.body.message).toBe("Ticket updated");
+    })
+  })
 
   describe("DELETE /tickets/:id", () => {
     it("Should delete ticket by id", async () => {
@@ -54,8 +77,6 @@ describe("Ticket Route", () => {
     });
 
     it("Should return error when ticket id does not exist", async () => {
-      const invalidId = -1;
-
       const response = await request(app).delete(`/tickets/${invalidId}`);
 
       expect(response.statusCode).toBe(404);
