@@ -14,8 +14,9 @@
     "start:frontend": "cd frontend && npm run serve",
     "start:backend": "cd backend && npm start",
     "start:both": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "test:fronted": "frontend/node_modules/.bin/jest --config=frontend/jest.config.js",
-    "test:backend": "jest --config=backend/jest.config.js",
+    "test:fronted": "frontend/node_modules/.bin/jest --config=frontend/jest.config.js --passWithNoTests",
+    "test:backend": "jest --config=backend/config/jest.config.js --runInBand --detectOpenHandles",
+
     "test": "npm run test:fronted && npm run test:backend"
   }
 }
