@@ -20,10 +20,20 @@ const sequelize = new Sequelize({
 // Middleware
 app.use(cors());
 app.use(helmet());
-app.use(morgan("combined"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", allRoutes);
+app.use((err, req, res, next) => {
+  if (err.name === "SequelizeValidationError") {
+    return res.status(400).json({ message: err.errors[0].message });
+  }
+
+  res.status(500).json({ message: "An unexpected error occurred" })
+});
+
+if(process.env.NODE_ENV !== "test") {
+  app.use(morgan("combined"));
+}
 
 if (require.main === module) {
   // Test database connection

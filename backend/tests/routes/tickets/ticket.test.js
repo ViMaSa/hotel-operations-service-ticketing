@@ -1,23 +1,44 @@
 const request = require("supertest");
-const app = require("../../main");
+const app = require("../../../main");
 
 describe("Ticket Route", () => {
   const invalidId = -1;
   let newTicketId;
 
   describe("POST /tickets", () => {
-    it("should create a new ticket and return it", async () => {
-      const newTicket = {
-        priority: 3,
-        guest_first_name: "John",
-        guest_last_name: "Wick",
-        room_number: 10114,
-        check_in_date: "2023-10-23",
-        ticket_request_type: "Maintenance Ticket",
-        description: "Toilet - Clogged",
-        status: "Open"
-      };
+    const newTicket = {
+      priority: 3,
+      guest_first_name: "John",
+      guest_last_name: "Wick",
+      room_number: 10114,
+      check_in_date: "2023-10-23",
+      ticket_request_type: "Maintenance Ticket",
+      description: "Toilet - Clogged",
+      status: "Open"
+    };
 
+    const nullFieldTicket = {
+      priority: 3,
+      guest_first_name: "John",
+      guest_last_name: "Wick",
+      check_in_date: "2023-10-23",
+      ticket_request_type: "Maintenance Ticket",
+      description: "Toilet - Clogged",
+      status: "Open"
+    };
+
+    const invalidTypeTicket = {
+      priority: "something",
+      guest_first_name: "John",
+      guest_last_name: "Wick",
+      room_number: 10114,
+      check_in_date: "2023-10-23",
+      ticket_request_type: "Maintenance Ticket",
+      description: "Toilet - Clogged",
+      status: "Open"
+    };
+
+    it("Should create a new valid ticket", async () => {
       const response = await request(app).post("/tickets").send(newTicket);
 
       newTicketId = response.body.id;
@@ -26,6 +47,20 @@ describe("Ticket Route", () => {
       expect(response.body.guest_last_name).toBe("Wick");
       expect(response.body.id).toBeTruthy();
     });
+
+    it("Should not create a new ticket with missing fields", async () => {
+      const response = await request(app).post("/tickets").send(nullFieldTicket);
+
+      expect(response.statusCode).toBe(400);
+      expect(response.body.message).toBe("ticket.room_number cannot be null");
+    })
+
+    it("Should not create a new ticket with incorrect data types", async () => {
+      const response = await request(app).post("/tickets").send(invalidTypeTicket);
+
+      expect(response.statusCode).toBe(500);
+      expect(response.body.message)
+    })
   });
 
   describe("GET /tickets", () => {
