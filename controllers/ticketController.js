@@ -26,6 +26,10 @@ exports.createTicket = async (req, res, next) => {
     const ticket = await Ticket.create(req.body);
     res.status(201).json(ticket);
   } catch (err) {
+    if (err.name === "SequelizeValidationError") {
+      return res.status(400).json({ message: err.errors[0].message });
+    }
+
     next(err);
   }
 };
