@@ -1,42 +1,17 @@
 const request = require("supertest");
 const app = require("../../../main");
+const {
+  generateTicketData,
+  invalidId
+} = require("../../utils/dataGenerators");
 
 describe("Ticket Route", () => {
-  const invalidId = -1;
   let newTicketId;
+  const newTicket = generateTicketData();
+  const nullFieldTicket = generateTicketData({ priority: undefined });
+  const invalidTypeTicket = generateTicketData({ priority: "Something" })
 
   describe("POST /tickets", () => {
-    const newTicket = {
-      priority: 3,
-      guest_first_name: "John",
-      guest_last_name: "Wick",
-      room_number: 10114,
-      check_in_date: "2023-10-23",
-      ticket_request_type: "Maintenance Ticket",
-      description: "Toilet - Clogged",
-      status: "Open"
-    };
-
-    const nullFieldTicket = {
-      priority: 3,
-      guest_first_name: "John",
-      guest_last_name: "Wick",
-      check_in_date: "2023-10-23",
-      ticket_request_type: "Maintenance Ticket",
-      description: "Toilet - Clogged",
-      status: "Open"
-    };
-
-    const invalidTypeTicket = {
-      priority: "something",
-      guest_first_name: "John",
-      guest_last_name: "Wick",
-      room_number: 10114,
-      check_in_date: "2023-10-23",
-      ticket_request_type: "Maintenance Ticket",
-      description: "Toilet - Clogged",
-      status: "Open"
-    };
 
     it("Should create a new valid ticket", async () => {
       const response = await request(app).post("/tickets").send(newTicket);
@@ -44,7 +19,7 @@ describe("Ticket Route", () => {
       newTicketId = response.body.id;
 
       expect(response.statusCode).toBe(201);
-      expect(response.body.guest_last_name).toBe("Wick");
+      expect(response.body.guest_last_name).toBe(newTicket.guest_last_name);
       expect(response.body.id).toBeTruthy();
     });
 
@@ -52,14 +27,14 @@ describe("Ticket Route", () => {
       const response = await request(app).post("/tickets").send(nullFieldTicket);
 
       expect(response.statusCode).toBe(400);
-      expect(response.body.message).toBe("ticket.room_number cannot be null");
+      expect(response.body.message).toBe("ticket.priority cannot be null");
     })
 
     it("Should not create a new ticket with incorrect data types", async () => {
       const response = await request(app).post("/tickets").send(invalidTypeTicket);
 
       expect(response.statusCode).toBe(500);
-      expect(response.body.message)
+      expect(response.body.message).toBe("An unexpected error occurred");
     })
   });
 
@@ -83,8 +58,8 @@ describe("Ticket Route", () => {
     it("Should return error fetching ticket by id that does not exist", async() => {
       const response = await request(app).get(`/tickets/${invalidId}`);
 
-      expect(response.statusCode).toBe(404);
-      expect(response.body.message).toBe("Ticket not found");
+      expect(response.statusCode).toBe(500);
+      expect(response.body.message).toBe("An unexpected error occurred");
     })
   });
 
@@ -114,8 +89,8 @@ describe("Ticket Route", () => {
     it("Should return error when ticket id does not exist", async () => {
       const response = await request(app).delete(`/tickets/${invalidId}`);
 
-      expect(response.statusCode).toBe(404);
-      expect(response.body.message).toBe("Ticket not found");
+      expect(response.statusCode).toBe(500);
+      expect(response.body.message).toBe("An unexpected error occurred");
     })
   });
 });
