@@ -12,10 +12,8 @@ describe("Ticket Route", () => {
   const invalidTypeTicket = generateTicketData({ priority: "Something" })
 
   describe("POST /tickets", () => {
-
     it("Should create a new valid ticket", async () => {
       const response = await request(app).post("/tickets").send(newTicket);
-
       newTicketId = response.body.id;
 
       expect(response.statusCode).toBe(201);
@@ -34,7 +32,7 @@ describe("Ticket Route", () => {
       const response = await request(app).post("/tickets").send(invalidTypeTicket);
 
       expect(response.statusCode).toBe(500);
-      expect(response.body.message).toBe("An unexpected error occurred");
+      expect(response.body.message).toEqual("500 Internal Server Error");
     })
   });
 
@@ -59,7 +57,7 @@ describe("Ticket Route", () => {
       const response = await request(app).get(`/tickets/${invalidId}`);
 
       expect(response.statusCode).toBe(500);
-      expect(response.body.message).toBe("An unexpected error occurred");
+      expect(response.body.message).toBe("500 Internal Server Error");
     })
   });
 
@@ -68,7 +66,6 @@ describe("Ticket Route", () => {
       const updateDetail = {
         guest_first_name: "Jason",
       }
-
       const response = await request(app)
         .put(`/tickets/${newTicketId}`)
         .send(updateDetail);
@@ -90,7 +87,7 @@ describe("Ticket Route", () => {
       const response = await request(app).delete(`/tickets/${invalidId}`);
 
       expect(response.statusCode).toBe(500);
-      expect(response.body.message).toBe("An unexpected error occurred");
+      expect(response.body.message).toBe("500 Internal Server Error");
     })
   });
 });
