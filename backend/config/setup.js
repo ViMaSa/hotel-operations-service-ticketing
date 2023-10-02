@@ -7,9 +7,6 @@ module.exports = async () => {
     await sequelize.authenticate();
   }
 
-  // Drop all tables to start fresh
-  await sequelize.drop();
-
   // Resync tables
   await sequelize.sync();
 };

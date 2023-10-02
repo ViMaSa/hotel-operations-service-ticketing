@@ -28,7 +28,7 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ message: err.errors[0].message });
   }
 
-  res.status(500).json({ message: "An unexpected error occurred" })
+  res.status(500).json({ message: "500 Internal Server Error" })
 });
 
 if(process.env.NODE_ENV !== "test") {

@@ -15,7 +15,7 @@
     "start:backend": "cd backend && npm start",
     "start:both": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
     "test:fronted": "NODE_ENV=test frontend/node_modules/.bin/jest --config=frontend/jest.config.js --passWithNoTests",
-    "test:backend": "NODE_ENV=test jest --config=backend/config/jest.config.js --runInBand --detectOpenHandles",
+    "test:backend": "NODE_ENV=test jest --config=backend/config/jest.config.js --runInBand --detectOpenHandles --silent",
     "test": "NODE_ENV=test npm run test:fronted && npm run test:backend"
   }
 }
