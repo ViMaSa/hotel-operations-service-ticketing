@@ -3,9 +3,11 @@ const router = express.Router();
 
 // Route variables
 const ticketRoutes = require("./ticket");
+const userRoutes = require("./user");
 
 // Routes
 router.use("/tickets", ticketRoutes);
+router.use("/user", userRoutes);
 
 // Home page route
 router.use("", (req, res) => {
