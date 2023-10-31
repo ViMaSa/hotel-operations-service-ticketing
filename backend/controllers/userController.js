@@ -39,7 +39,13 @@ exports.registerUser = async (req, res, next) => {
     user.password = await hashPassword(user.password);
 
     await user.save();
-    res.status(201).send({ message: "Registration successful!" });
+
+    const token = createToken(user.id);
+
+    res.status(201).send({
+      message: "Registration successful!",
+      token,
+    });
   } catch (err) {
     next(err);
   }
