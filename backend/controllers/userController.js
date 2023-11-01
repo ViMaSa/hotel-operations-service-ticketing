@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const { createToken } = require("../middleware/jwtMiddleware");
 const saltRounds = 10;
 const pepper = process.env.PEPPER;
 
@@ -36,7 +37,13 @@ exports.registerUser = async (req, res, next) => {
     user.password = await hashPassword(user.password);
 
     await user.save();
-    res.status(201).send({ message: "Registration successful!" });
+
+    const token = createToken(user.id);
+
+    res.status(201).send({
+      message: "Registration successful!",
+      token,
+    });
   } catch (err) {
     next(err);
   }
@@ -57,7 +64,12 @@ exports.loginUser = async (req, res, next) => {
       return res.status(404).json({ message: "Incorrect password" });
     }
 
-    res.status(200).send({ message: "Login Successful!" });
+    const token = createToken(user.id);
+
+    res.status(200).send({
+      message: "Login Successful!",
+      token,
+    });
   } catch (err) {
     next(err);
   }

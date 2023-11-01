@@ -1,9 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const { Sequelize } = require("sequelize");
 const allRoutes = require("./routes/index");
+const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,13 +25,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", allRoutes);
-app.use((err, req, res, next) => {
-  if (err.name === "SequelizeValidationError") {
-    return res.status(400).json({ message: err.errors[0].message });
-  }
-
-  res.status(500).json({ message: "500 Internal Server Error" })
-});
+app.use(errorHandler);
 
 if(process.env.NODE_ENV !== "test") {
   app.use(morgan("combined"));
