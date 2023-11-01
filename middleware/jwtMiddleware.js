@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-const SECRET_KEY = process.env.JWT_SECRET
+const SECRET_KEY = process.env.JWT_SECRET;
+const TOKEN_EXPIRATION = process.env.JWT_EXPIRES_IN;
 
 const checkJwt = (req, res, next) => {
   const token = req.headers.authorization;
@@ -17,6 +18,17 @@ const checkJwt = (req, res, next) => {
 
     next();
   });
-}
+};
 
-module.exports = checkJwt;
+const createToken = (userId) => {
+  return jwt.sign({ userId }, SECRET_KEY, {
+    expiresIn: TOKEN_EXPIRATION
+  });
+};
+
+
+module.exports =
+{
+  checkJwt,
+  createToken
+};

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController.js");
-const checkJwt = require("../middleware/jwtMiddleware");
+const { checkJwt } = require("../middleware/jwtMiddleware");
 
 router.post("/register", userController.registerUser);
 
