@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const checkJWT = require("../middleware/jwtMiddleware");
+const { checkJwt } = require("../middleware/jwtMiddleware");
 
 // Route variables
 const ticketRoutes = require("./ticket");
 const userRoutes = require("./user");
 
 // Routes
-router.use("/tickets", checkJWT, ticketRoutes);
+router.use("/tickets", checkJwt, ticketRoutes);
 router.use("/user", userRoutes);
 
 // Home page route

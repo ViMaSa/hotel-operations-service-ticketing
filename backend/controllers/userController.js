@@ -1,10 +1,8 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const { createToken } = require("../middleware/jwtMiddleware");
 const saltRounds = 10;
 const pepper = process.env.PEPPER;
-const JWT_SECRET = process.env.JWT_SECRET;
-const EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 
 exports.getUserById = async (req, res, next) => {
   try {
@@ -136,12 +134,6 @@ exports.deleteUser = async (req, res, next) => {
 const checkPassword = async (submittedPassword, userHashedPassword) => {
   const pepperedPassword = submittedPassword + pepper;
   return await bcrypt.compare(pepperedPassword, userHashedPassword);
-};
-
-const createToken = (userId) => {
-  return jwt.sign({ userId }, JWT_SECRET, {
-    expiresIn: EXPIRES_IN
-  });
 };
 
 const isValidPassword = (password) => {
