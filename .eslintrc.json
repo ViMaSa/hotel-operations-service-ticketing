@@ -11,6 +11,7 @@
     ],
     "overrides": [
     ],
+    "parser": "babel-eslint",
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "script"
