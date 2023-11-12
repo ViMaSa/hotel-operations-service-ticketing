@@ -18,8 +18,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup" ref="navbarCollapse">
         <div class="navbar-nav ms-auto">
-          <router-link class="nav-link" aria-current="page" to="/register" @click="closeNavbar">Register</router-link>
-          <router-link class="nav-link" to="/login" @click="closeNavbar">Log In</router-link>
+          <ul class="nav nav-pills flex-sm-row flex-column text-center">
+            <li class="nav-item">
+              <router-link class="nav-link" aria-current="page" active-class="active" to="/register" @click="closeNavbar">Register</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" active-class="active" to="/login" @click="closeNavbar">Log In</router-link>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -40,4 +46,20 @@ export default {
 </script>
 
 <style scoped>
+.nav-link {
+  color: black;
+}
+
+.nav-item > .nav-link.active {
+  background-color: #FFFF;
+  border: 2px solid #2aad29;
+  margin: -2px;
+  text-decoration: #0000;
+}
+.nav-link:hover {
+  background-color: #2aad29;
+  border: 2px solid #2aad29;
+  margin: -2px;
+  color: #FFFF;
+}
 </style>
