@@ -1,17 +1,13 @@
 <template>
   <div>
+    DashboardPage
   </div>
 </template>
 
 <script>
-// import HelloWorld from "./components/HelloWorld.vue"
-
-// export default {
-//   name: "App",
-//   components: {
-//     HelloWorld
-//   }
-// }
+export default {
+  name: "DashboardPage",
+}
 </script>
 
 <style>
