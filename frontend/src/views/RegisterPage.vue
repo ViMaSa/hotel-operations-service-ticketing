@@ -62,18 +62,14 @@ export default {
       this.submitted = true;
       if(this.form.email && this.form.first_name && this.form.last_name && this.form.password) {
         try {
-          console.log("hello")
-          // Send a POST request to your API endpoint
           const response = await this.$http.post('/api/user/register', this.form);
-          // Handle success
+
           console.log(response.data);
-          // Redirect or update UI as needed
-          // this.$router.push('/dashboard');
-      } catch (error) {
-        // Handle error
-        console.error(error.response ? error.response.data : error.message);
-        // Possibly show an error message to the user
-      }
+
+          this.$router.push('/dashboard');
+        } catch (err) {
+          console.error(err.response ? err.response.data : err.message);
+        }
       }
     }
   }
