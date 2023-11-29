@@ -7,7 +7,8 @@ const ticketRoutes = require("./ticket");
 const userRoutes = require("./user");
 
 // Routes
-router.use("/tickets", checkJwt, ticketRoutes);
+router.use("/tickets", ticketRoutes);
+// router.use("/tickets", checkJwt, ticketRoutes);
 router.use("/user", userRoutes);
 
 // Home page route
