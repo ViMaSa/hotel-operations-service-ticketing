@@ -47,7 +47,7 @@ export default {
         try {
           const response = await this.$http.post('/api/user/login', this.form);
 
-          console.log(response.data);
+          sessionStorage.setItem("token", response.data.token)
 
           this.$router.push('/dashboard');
         } catch (err) {

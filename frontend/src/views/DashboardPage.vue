@@ -50,8 +50,13 @@ export default {
   },
   methods: {
     loadTickets() {
-      this.$http.get('/api/tickets')
-        .then(response => {
+      const token = sessionStorage.getItem("token");
+
+      this.$http.get('/api/tickets', {
+        headers: {
+          'Authorization': `${token}`,
+        },
+      }).then(response => {
           this.tickets = response.data;
         })
         .catch(err => {
