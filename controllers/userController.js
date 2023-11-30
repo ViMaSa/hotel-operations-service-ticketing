@@ -43,6 +43,10 @@ exports.registerUser = async (req, res, next) => {
     res.status(201).send({
       message: "Registration successful!",
       token,
+      user: {
+        first_name: user.first_name,
+        last_name: user.last_name,
+      },
     });
   } catch (err) {
     next(err);
@@ -69,6 +73,10 @@ exports.loginUser = async (req, res, next) => {
     res.status(200).send({
       message: "Login Successful!",
       token,
+      user: {
+        first_name: user.first_name,
+        last_name: user.last_name,
+      },
     });
   } catch (err) {
     next(err);
