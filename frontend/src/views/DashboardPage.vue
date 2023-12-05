@@ -54,7 +54,7 @@ export default {
 
       this.$http.get('/api/tickets', {
         headers: {
-          'Authorization': `${token}`,
+          'Authorization': `Bearer ${token}`,
         },
       }).then(response => {
           this.tickets = response.data;
