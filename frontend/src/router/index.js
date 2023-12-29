@@ -3,6 +3,7 @@ import Home from "@/views/HomePage.vue";
 import Dashboard from "@/views/DashboardPage.vue";
 import LogIn from "@/views/LogInPage.vue";
 import Register from "@/views/RegisterPage.vue";
+import CreateTicket from "@/views/CreateTicketPage.vue";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register
+  },
+  {
+    path: "/create-ticket",
+    name: "CreateTicket",
+    component: CreateTicket
   }
 ];
 

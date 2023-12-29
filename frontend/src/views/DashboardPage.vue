@@ -1,14 +1,14 @@
 <template>
   <div class="dashboard-page-container container-fluid full-height py-4">
     <div class="card">
-      <div class="card-header">
-        <h5 class="card-title">Work Tickets</h5>
-        <h6 class="card-subtitle">My Tickets</h6>
-        <form class="row mx-0 my-2">
-          <input class="col-11 ml-1" type="search" placeholder="Search by room number" aria-label="Search">
-          <button class="btn btn-outline-success col-auto mx-sm-2" type="submit">Search</button>
-        </form>
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h5 class="card-title mb-0">My Tickets</h5>
+        <button class="btn btn-warning" @click="redirectToCreateTicket" type="button">Create New Ticket</button>
       </div>
+      <form class="d-flex my-3 px-3">
+        <input class="form-control me-2" type="search" placeholder="Search by room number" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
       <div class="card-body p-0">
         <div class="table-container table-responsive-sm container-fluid p-0">
           <table class="table table-hover">
@@ -62,6 +62,9 @@ export default {
         .catch(err => {
           console.error(err.message);
         });
+    },
+    redirectToCreateTicket() {
+      this.$router.push('/create-ticket')
     }
   }
 };

@@ -14,14 +14,14 @@
           </div>
         </div>
         <div class="mb-3 row">
-          <div class="col me-5" :class="{ 'has-validation': submitted && !form.first_name}">
+          <div class="col me-5" :class="{ 'has-validation': submitted && !form.first_name }">
             <label for="first_name" class="form-label">First name</label>
             <input v-model="form.first_name" type="text" class="form-control" id="first_name" placeholder="First name" required>
             <div v-if="submitted && !form.first_name" class="invalid-feedback">
               First name is required.
             </div>
           </div>
-          <div class="col" :class="{ 'has-validation': submitted && !form.last_name}">
+          <div class="col" :class="{ 'has-validation': submitted && !form.last_name }">
             <label for="last_name" class="form-label">Last name</label>
             <input v-model="form.last_name" type="text" class="form-control" id="last_name" required>
             <div v-if="submitted && !form.last_name" class="invalid-feedback">
@@ -29,7 +29,7 @@
             </div>
           </div>
         </div>
-        <div class="mb-3" :class="{ 'has-validation': submitted && !form.password}">
+        <div class="mb-3" :class="{ 'has-validation': submitted && !form.password }">
           <label for="password" class="form-label">Password</label>
           <input v-model="form.password" type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Password" required>
           <div id="passwordHelp" class="form-text"> We'll never share your password with anyone else.</div>
