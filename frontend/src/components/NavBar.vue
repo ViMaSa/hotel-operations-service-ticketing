@@ -29,7 +29,6 @@
           <ul class="nav nav-pills flex-sm-row flex-column text-center" v-if="userState.username">
             <li class="nav-item">
               <p class="navbar-text btn-font-size text-black mx-2">Welcome, {{ userState.username }}</p>
-              <!-- Change this to the user name as text and then the button should navigate to user profile page
               <router-link class="nav-link" aria-current="page" active-class="active" to="/register" @click="closeNavbar">Register</router-link> -->
             </li>
             <li class="nav-item">
