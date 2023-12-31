@@ -1,18 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg shadow bg-white">
     <div class="container-fluid">
-      <div v-if="userState.username">
-        <router-link class="navbar-brand" to="/dashboard">
-          <font-awesome-icon icon="bell-concierge" style="color: #2aad29;"/>
-          H.O.S.T.
-        </router-link>
-      </div>
-      <div v-else>
-        <router-link class="navbar-brand" to="/">
-          <font-awesome-icon icon="bell-concierge" style="color: #2aad29;"/>
-          H.O.S.T.
-        </router-link>
-      </div>
+      <router-link class="navbar-brand" :to="userState.username ? '/dashboard' : '/'">
+        <font-awesome-icon icon="bell-concierge" style="color: #2aad29;"/>
+        H.O.S.T.
+      </router-link>
       <button
         class="navbar-toggler"
         type="button"
@@ -26,16 +18,13 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup" ref="navbarCollapse">
         <div class="navbar-nav ms-auto">
-          <ul class="nav nav-pills flex-sm-row flex-column text-center" v-if="userState.username">
-            <li class="nav-item">
-              <p class="navbar-text btn-font-size text-black mx-2">Welcome, {{ userState.username }}</p>
-              <router-link class="nav-link" aria-current="page" active-class="active" to="/register" @click="closeNavbar">Register</router-link> -->
-            </li>
+          <ul v-if="userState.username" class="nav nav-pills flex-sm-row flex-column text-center">
+            <span class="navbar-text text-black mx-2 ">Welcome, {{ userState.username }}</span>
             <li class="nav-item">
               <router-link class="nav-link" active-class="active" to="/" @click="logout">Log Out</router-link>
             </li>
           </ul>
-          <ul class="nav nav-pills flex-sm-row flex-column text-center" v-else>
+          <ul v-else class="nav nav-pills flex-sm-row flex-column text-center">
             <li class="nav-item">
               <router-link class="nav-link" aria-current="page" active-class="active" to="/register" @click="closeNavbar">Register</router-link>
             </li>

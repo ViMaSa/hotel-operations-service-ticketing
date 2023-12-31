@@ -8,12 +8,19 @@
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue';
+import NavBar from '@/components/NavBar.vue';
+import { initializeUserState, clearUser } from "@/store/userState";
 import { jwtDecode } from "jwt-decode";
 
 export default {
   name: "App",
+  data() {
+    return {
+      tokenCheckInterval: null,
+    }
+  },
   created() {
+    initializeUserState();
     this.checkTokenExpiry();
     this.tokenCheckInterval = setInterval(this.checkTokenExpiry, 5 * 60 * 1000);
   },
@@ -24,22 +31,32 @@ export default {
     checkTokenExpiry() {
       const token = sessionStorage.getItem("token");
       if(!token) {
-        this.handleExpiredToen();
+        this.handleExpiredToken();
+        clearUser();
         return;
       }
 
       const tokenExpires = this.decodeTokenExpiry(token);
       const now = Date.now();
-      console.log(tokenExpires);
-      console.log(now);
-      // finish global check && then before route navigation check
+
+      if(tokenExpires < now) {
+        this.handleExpiredToken();
+        clearUser();
+      }
     },
     decodeTokenExpiry(token) {
       const decoded = jwtDecode(token);
       return decoded.exp * 1000;
     },
+    handleExpiredToken() {
+      clearInterval(this.tokenCheckInterval);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("username");
+      this.$router.push('/')
+    }
   },
   beforeUnmount() {
+    clearUser();
     clearInterval(this.tokenCheckInterval);
   }
 }

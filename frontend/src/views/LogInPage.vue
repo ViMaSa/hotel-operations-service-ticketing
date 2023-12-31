@@ -49,9 +49,9 @@ export default {
           const response = await this.$http.post('/api/user/login', this.form);
           const username = response.data.user.first_name + " " + response.data.user.last_name;
 
-          setUser(username);
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("username", username);
+          setUser(username);
 
           this.$router.push('/dashboard');
         } catch (err) {
