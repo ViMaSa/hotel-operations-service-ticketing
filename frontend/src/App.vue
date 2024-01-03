@@ -32,7 +32,6 @@ export default {
       const token = sessionStorage.getItem("token");
       if(!token) {
         this.handleExpiredToken();
-        clearUser();
         return;
       }
 
@@ -41,7 +40,6 @@ export default {
 
       if(tokenExpires < now) {
         this.handleExpiredToken();
-        clearUser();
       }
     },
     decodeTokenExpiry(token) {
@@ -49,6 +47,7 @@ export default {
       return decoded.exp * 1000;
     },
     handleExpiredToken() {
+      clearUser();
       clearInterval(this.tokenCheckInterval);
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("username");

@@ -3,7 +3,8 @@ import Home from "@/views/HomePage.vue";
 import Dashboard from "@/views/DashboardPage.vue";
 import LogIn from "@/views/LogInPage.vue";
 import Register from "@/views/RegisterPage.vue";
-import CreateTicket from "@/views/CreateTicketPage.vue";
+import CreateTicket from "@/views/tickets/CreateTicketPage.vue";
+import TicketDetails from "@/views/tickets/TicketDetailsPage.vue"
 
 const routes = [
   {
@@ -27,9 +28,14 @@ const routes = [
     component: Register
   },
   {
-    path: "/create-ticket",
+    path: "/tickets/create",
     name: "CreateTicket",
     component: CreateTicket
+  },
+  {
+    path: "/tickets/:ticketId",
+    name: "TicketDetails",
+    component: TicketDetails,
   }
 ];
 

@@ -8,10 +8,12 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faBellConcierge,
+  faTicket,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
   faBellConcierge,
+  faTicket,
 );
 
 const app = createApp(App);

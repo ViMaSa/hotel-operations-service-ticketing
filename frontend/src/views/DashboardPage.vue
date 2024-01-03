@@ -21,7 +21,7 @@
                 <th scope="col">Request Type</th>
               </tr>
             </thead>
-            <tbody v-for="ticket in tickets" :key="ticket.id">
+            <tbody v-for="ticket in tickets" :key="ticket.id" class="position-relative">
               <tr>
                 <th scope="col">{{ ticket.id }}</th>
                 <td scope="col">{{ ticket.priority }}</td>
@@ -29,6 +29,7 @@
                 <td scope="col">{{ ticket.guest_first_name + " " + ticket.guest_last_name }}</td>
                 <td scope="col">{{ ticket.ticket_request_type }}</td>
               </tr>
+              <router-link :to="'/tickets/' + ticket.id" class="stretched-link"></router-link>
             </tbody>
           </table>
         </div>
@@ -57,14 +58,16 @@ export default {
           'Authorization': `Bearer ${token}`,
         },
       }).then(response => {
-          this.tickets = response.data;
-        })
-        .catch(err => {
-          console.error(err.message);
-        });
+        this.tickets = response.data;
+      }).catch(err => {
+        console.error(err.message);
+      });
+    },
+    redirectToViewTicket(ticketId) {
+      this.$router.push('/tickets/' + ticketId)
     },
     redirectToCreateTicket() {
-      this.$router.push('/create-ticket')
+      this.$router.push('/tickets/create')
     }
   }
 };
