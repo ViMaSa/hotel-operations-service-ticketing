@@ -7,13 +7,25 @@ import { createApp } from "vue"
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
+  faArrowLeft,
   faBellConcierge,
+  faCheck,
+  faPencil,
+  faTableColumns,
   faTicket,
+  faTrashCan,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
+  faArrowLeft,
   faBellConcierge,
+  faCheck,
+  faPencil,
+  faTableColumns,
   faTicket,
+  faTrashCan,
+  faX,
 );
 
 const app = createApp(App);
