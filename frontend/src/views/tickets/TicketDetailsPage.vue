@@ -119,22 +119,27 @@
         <div class="mb-3">
           <span>Created at: {{ sanitizeDate(ticketDetails.createdAt) || '' }}</span>
         </div>
-        <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-danger" aria-label="Delete Ticket">
-            <font-awesome-icon icon="fa-trash-can" style="color: white;"/>
-            Delete
-          </button>
-        </div>
+        <ConfirmationModal
+          :ticketId="ticketId"
+          modalTitle="Ticket Deletion"
+          :modalBodyText="'Are you sure you want to delete ticket number: ' + ticketId + '?'"
+          :url="'/api/tickets/'+ ticketId"
+        />
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import ConfirmationModal from "@/components/ConfirmationModal.vue";
+
 export default {
   name: "TicketDetailsPage",
   beforeMount() {
     this.loadTicketDetails(this.ticketId);
+  },
+  components: {
+    ConfirmationModal,
   },
   data() {
     return {

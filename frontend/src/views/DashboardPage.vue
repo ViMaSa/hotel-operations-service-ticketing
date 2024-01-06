@@ -58,7 +58,8 @@ export default {
           'Authorization': `Bearer ${token}`,
         },
       }).then(response => {
-        this.tickets = response.data;
+        const dataArray = Object.values(response.data);
+        this.tickets = dataArray.sort((a,b) => b.id - a.id)
       }).catch(err => {
         console.error(err.message);
       });

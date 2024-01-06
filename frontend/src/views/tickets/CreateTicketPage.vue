@@ -28,10 +28,10 @@
             :class="['form-control', { 'is-invalid': submitted && !form.ticket_request_type}]"
             id="inputGroupSelect01"
           required>
-            <option value="house_keeping">House Keeping</option>
-            <option value="dinning_service">Dinning Service</option>
-            <option value="facilities">Facilities</option>
-            <option value="vendor">Vendor</option>
+            <option value="House Keeping">House Keeping</option>
+            <option value="Dinning Service">Dinning Service</option>
+            <option value="Facilities">Facilities</option>
+            <option value="Vendor">Vendor</option>
           </select>
           <div v-if="submitted && !form.ticket_request_type" class="invalid-feedback">
             Ticket request type is required.
