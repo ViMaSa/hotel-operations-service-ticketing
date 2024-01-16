@@ -53,6 +53,7 @@ export default {
           sessionStorage.setItem("username", username);
           setUser(username);
 
+          this.$root.initializeTokenInterval();
           this.$router.push('/dashboard');
         } catch (err) {
           console.error(err.response ? err.response.data : err.message);

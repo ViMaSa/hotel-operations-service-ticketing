@@ -62,6 +62,7 @@ export default {
         this.tickets = dataArray.sort((a,b) => b.id - a.id)
       }).catch(err => {
         console.error(err.message);
+        this.$router.push('/');
       });
     },
     redirectToViewTicket(ticketId) {

@@ -3,7 +3,7 @@
     <header>
       <NavBar></NavBar>
     </header>
-    <div class="modal" id="hello" tabindex="-1">
+    <div class="modal" id="refreshModal" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
@@ -34,8 +34,8 @@ export default {
   data() {
     return {
       tokenCheckInterval: null,
-      showModalTimer: null,
       myModal: null,
+      minimumWarningTime: null,
     }
   },
   mounted() {
@@ -43,19 +43,31 @@ export default {
   },
   created() {
     initializeUserState();
-    this.checkTokenExpiry();
-    this.tokenCheckInterval = setInterval(this.checkTokenExpiry, 30 * 1000)
-    setTimeout(() => {
-      this.initializeAndShowModal();
-    }, 1000)
+    if(sessionStorage.getItem("token")) {
+      this.initializeTokenInterval();
+    }
   },
   components: {
     NavBar,
   },
   methods: {
+    initializeModal() {
+      this.minimumWarningTime = (59 * 60 * 1000);
+
+      const modalElement = document.getElementById('refreshModal');
+      if(modalElement) {
+        this.myModal = new Modal(modalElement, {
+          keyboard: false,
+          focus: true,
+          backdrop: "static"
+        });
+      }
+    },
+    initializeTokenInterval() {
+      this.tokenCheckInterval = setInterval(this.checkTokenExpiry, 5000);
+    },
     checkTokenExpiry() {
       const token = sessionStorage.getItem("token");
-
       if(!token) {
         this.handleExpiredToken();
         return;
@@ -66,43 +78,22 @@ export default {
 
       if(tokenExpires < now) {
         this.handleExpiredToken();
-      } else if (tokenExpires - now <= 59.5 * 60 * 1000) {
-        this.initializeAndShowModal();
+      } else if (tokenExpires - now <= this.minimumWarningTime) {
+        this.showModal();
       }
     },
-    initializeAndShowModal() {
-      if(!this.myModal) {
-        const modalElement = document.getElementById('hello');
-        if(modalElement) {
-          this.myModal = new Modal(modalElement);
-          this.showModalAfterDelay();
-        }
-      } else {
-        this.myModal.show()
-      }
-    },
-    showModalAfterDelay() {
-      setTimeout(() => {
-        if(this.myModal) {
-          this.myModal.show();
-        }
-      }, 300)
-    },
-    showRefreshTokenModal() {
+    showModal() {
       if(this.myModal) {
-        this.myModal.show()
-      } else {
-        console.error('Modal element not found')
+        this.myModal.show();
       }
-      this.showModalTimer = setTimeout(() => {
-        if(this.refreshTokenModalVisible) {
-          this.handleExpiredToken();
-        }
-      }, 10 * 60 * 1000)
+    },
+    hideModal() {
+      if(this.myModal) {
+        this.myModal.hide();
+      }
     },
     confirmPresence() {
-      this.myModal.hide();
-      clearTimeout(this.showModalTimer);
+      this.hideModal();
       this.refreshToken();
     },
     refreshToken() {
@@ -113,6 +104,7 @@ export default {
       return decoded.exp * 1000;
     },
     handleExpiredToken() {
+      this.hideModal();
       clearUser();
       clearInterval(this.tokenCheckInterval);
       sessionStorage.removeItem("token");
@@ -121,12 +113,9 @@ export default {
     }
   },
   beforeUnmount() {
-    if(this.myModal) {
-      this.myModal.hide();
-    }
+    this.hideModal();
     clearUser();
     clearInterval(this.tokenCheckInterval);
-    clearTimeout(this.showModalTimer);
   },
 }
 </script>
