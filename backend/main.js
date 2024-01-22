@@ -11,13 +11,26 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Database Initialization
-const sequelize = new Sequelize({
-  dialect: "postgres",
-  host: process.env.DB_HOST,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-});
+let sequelize;
+if (process.env.NODE_ENV === 'production') {
+    sequelize = new Sequelize(process.env.DATABASE_URL, {
+        dialect: 'postgres',
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }
+        }
+    });
+} else {
+    sequelize = new Sequelize({
+        dialect: 'postgres',
+        host: process.env.DB_HOST,
+        username: process.env.DB_USER,
+        password: process.env.DB_PASS,
+        database: process.env.DB_NAME_DEV, // Assuming you're using a separate dev database
+    });
+}
 
 // Middleware
 app.use(cors());
