@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const { createToken } = require("../middleware/jwtMiddleware");
+const { createToken, refreshToken } = require("../middleware/jwtMiddleware");
 const saltRounds = 10;
 const pepper = process.env.PEPPER;
 
@@ -17,6 +17,20 @@ exports.getUserById = async (req, res, next) => {
       return res.status(404).json({ message: "User not found" });
     }
     res.status(200).json({ user: user });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.refreshUserToken = async (req, res, next) => {
+  try {
+    const tokenResponse = refreshToken(req.body.token);
+
+    if(!tokenResponse.token) {
+      res.status(tokenResponse.status).json({ message: tokenResponse.message });
+    }
+
+    res.status(tokenResponse.status).json({ refreshToken: tokenResponse.token });
   } catch (err) {
     next(err);
   }

@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     initializeModal() {
-      this.minimumWarningTime = (59 * 60 * 1000);
+      this.minimumWarningTime = (5 * 60 * 1000);
 
       const modalElement = document.getElementById('refreshModal');
       if(modalElement) {
@@ -97,7 +97,15 @@ export default {
       this.refreshToken();
     },
     refreshToken() {
-      console.log("Refreshing token");
+      const token = sessionStorage.getItem("token");
+
+      this.$http.post('/api/user/refresh', {
+        token: token,
+      }).then(response => {
+        sessionStorage.setItem("token", response.data.refreshToken)
+      }).catch(err => {
+        console.error(err.message);
+      })
     },
     decodeTokenExpiry(token) {
       const decoded = jwtDecode(token);
