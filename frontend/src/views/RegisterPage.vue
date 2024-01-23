@@ -67,7 +67,7 @@ export default {
           const response = await this.$http.post('/api/user/register', this.form);
           const username = response.data.user.first_name + " " + response.data.user.last_name;
 
-          console.log(username)
+          console.log(response.data)
 
           setUser(username);
           sessionStorage.setItem("token", response.data.token);
