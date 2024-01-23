@@ -21,8 +21,12 @@ export default {
   },
   methods: {
     async findError () {
-      const response = await this.$http.get('/api/hello');
-      console.log(response);
+      try {
+        const response = await this.$http.get('/api/hello');
+        console.log(response);
+      } catch (err) {
+        console.error(err.response ? err.response.data : err.message)
+      }
     }
   }
 }
