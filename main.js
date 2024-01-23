@@ -39,9 +39,22 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
+const allowedOrigins = ['https://host-app-a4552180b0e3.herokuapp.com/', 'http://localhost:8080'];
+
 // Middleware
 app.use(airbrakeExpress.makeMiddleware(airbrake));
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204
+}));
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
