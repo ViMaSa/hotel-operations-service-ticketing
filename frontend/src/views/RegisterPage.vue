@@ -64,13 +64,8 @@ export default {
       this.submitted = true;
       if(this.form.email && this.form.first_name && this.form.last_name && this.form.password) {
         try {
-          const url = '/api/user/register';
-          console.log(`Making API call to: ${apiTarget}${url}`);
-          const response = await this.$http.post(url, this.form);
-          // const response = await this.$http.post('/api/user/register', this.form);
+          const response = await this.$http.post('https://host-app-server-7f2f9249185c.herokuapp.com/user/register', this.form);
           const username = response.data.user.first_name + " " + response.data.user.last_name;
-
-          console.log(response.data)
 
           setUser(username);
           sessionStorage.setItem("token", response.data.token);
