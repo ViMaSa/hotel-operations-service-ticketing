@@ -40,13 +40,13 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Middleware
+app.use(airbrakeExpress.makeMiddleware(airbrake));
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(airbrakeExpress.makeMiddleware(airbrake));
 app.use("/", allRoutes);
-app.use(errorHandler);
+// app.use(errorHandler);
 app.use(airbrakeExpress.makeErrorHandler(airbrake));
 
 if(process.env.NODE_ENV !== "test") {

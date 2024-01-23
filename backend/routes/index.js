@@ -16,7 +16,7 @@ router.use("", (req, res) => {
 });
 
 // Air Brake route
-router.get('/hello/:name', function hello(_req, _res) {
+router.get('/hello/', function hello(_req, _res) {
   throw new Error('hello from Express');
 });
 
