@@ -15,9 +15,4 @@ router.use("", (req, res) => {
   res.send("This is the start of the backend");
 });
 
-// Air Brake route
-router.get('/hello/', function hello(_req, _res) {
-  throw new Error('hello from Express');
-});
-
 module.exports = router;

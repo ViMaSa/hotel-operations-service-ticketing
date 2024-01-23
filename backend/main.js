@@ -46,6 +46,11 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", allRoutes);
+// Air Brake route
+app.get('/hello', function hello(_req, _res) {
+  throw new Error('hello from Express');
+});
+
 // app.use(errorHandler);
 app.use(airbrakeExpress.makeErrorHandler(airbrake));
 
