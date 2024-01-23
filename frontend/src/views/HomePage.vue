@@ -5,7 +5,6 @@
         <h2>Welcome to Hotel Operations System Ticketing! </h2>
         <h3>H.O.S.T.</h3>
       </div>
-      <button type="button" class="btn btn-warning" @click="findError">Click Me</button>
     </div>
   </div>
 </template>
@@ -19,16 +18,6 @@ export default {
       heroImage: heroImage,
     };
   },
-  methods: {
-    async findError () {
-      try {
-        const response = await this.$http.get('/api/hello');
-        console.log(response);
-      } catch (err) {
-        console.error(err.response ? err.response.data : err.message)
-      }
-    }
-  }
 }
 </script>
 

@@ -61,14 +61,12 @@ export default {
   },
   methods: {
     async handleSubmit () {
-      console.log(this.form)
       this.submitted = true;
       if(this.form.email && this.form.first_name && this.form.last_name && this.form.password) {
         try {
           const response = await this.$http.post('/api/user/register', this.form);
-          console.log(response.data.user)
+          console.log(response)
           const username = response.data.user.first_name + " " + response.data.user.last_name;
-          console.log(response.data)
 
           setUser(username);
           sessionStorage.setItem("token", response.data.token);
