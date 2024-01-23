@@ -38,6 +38,7 @@ exports.refreshUserToken = async (req, res, next) => {
 
 exports.registerUser = async (req, res, next) => {
   try {
+    console.log(req.body)
     const validation = validateData(req.body);
     if (!validation.isValid) {
       return res.status(400).json({ error: validation.error });
