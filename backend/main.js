@@ -46,7 +46,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", allRoutes);
-// app.use(errorHandler);
+app.use(errorHandler);
 app.use(airbrakeExpress.makeErrorHandler(airbrake));
 
 if(process.env.NODE_ENV !== "test") {
