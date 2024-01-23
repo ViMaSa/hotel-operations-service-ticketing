@@ -35,4 +35,9 @@ app.use(router);
 
 app.config.globalProperties.$http = axios;
 
+axios.interceptors.request.use(request => {
+  console.log('Starting Request', request.url);
+  return request;
+});
+
 app.mount("#app");
