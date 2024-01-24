@@ -64,6 +64,7 @@ export default {
       this.submitted = true;
       if(this.form.email && this.form.first_name && this.form.last_name && this.form.password) {
         try {
+          console.log(process.env.VUE_APP_BASE_URL);
           const response = await this.$http.post('/api/user/register', this.form);
           const username = response.data.user.first_name + " " + response.data.user.last_name;
 
