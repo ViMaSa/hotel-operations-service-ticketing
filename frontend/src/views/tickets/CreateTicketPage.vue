@@ -114,7 +114,7 @@ export default {
 
       if (this.isFormValid()) {
         try {
-          await this.$http.post('/api/tickets', this.form, {
+          await this.$http.post(process.env.VUE_APP_BASE_URL + '/tickets', this.form, {
             headers: {
               'Authorization': 'Bearer ' + sessionStorage.getItem("token")
             }

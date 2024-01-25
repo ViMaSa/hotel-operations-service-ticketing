@@ -53,7 +53,7 @@ export default {
     loadTickets() {
       const token = sessionStorage.getItem("token");
 
-      this.$http.get('/api/tickets', {
+      this.$http.get(process.env.VUE_APP_BASE_URL + '/tickets', {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

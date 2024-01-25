@@ -99,7 +99,7 @@ export default {
     refreshToken() {
       const token = sessionStorage.getItem("token");
 
-      this.$http.post('/api/user/refresh', {
+      this.$http.post(process.env.VUE_APP_BASE_URL + '/user/refresh', {
         token: token,
       }).then(response => {
         sessionStorage.setItem("token", response.data.refreshToken)

@@ -123,7 +123,7 @@
           :ticketId="ticketId"
           modalTitle="Ticket Deletion"
           :modalBodyText="'Are you sure you want to delete ticket number: ' + ticketId + '?'"
-          :url="'/api/tickets/'+ ticketId"
+          :url="process.env.VUE_APP_BASE_URL + '/tickets/'+ ticketId"
         />
       </form>
     </div>
@@ -155,7 +155,7 @@ export default {
 
       if (this.isTicketValid()) {
         try {
-          await this.$http.put('/api/tickets/' + this.ticketId, this.ticketDetails, {
+          await this.$http.put(process.env.VUE_APP_BASE_URL + '/tickets/' + this.ticketId, this.ticketDetails, {
             headers: {
               'Authorization': 'Bearer ' + sessionStorage.getItem("token")
             }
@@ -183,7 +183,7 @@ export default {
     loadTicketDetails(ticketId) {
       const token = sessionStorage.getItem("token");
 
-      this.$http.get('/api/tickets/'+ ticketId, {
+      this.$http.get(process.env.VUE_APP_BASE_URL + '/tickets/'+ ticketId, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

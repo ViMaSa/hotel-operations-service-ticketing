@@ -67,8 +67,6 @@ export default {
           const response = await this.$http.post(process.env.VUE_APP_BASE_URL + '/user/register', this.form);
           const username = response.data.user.first_name + " " + response.data.user.last_name;
 
-          console.log(response)
-
           setUser(username);
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("username", username);
