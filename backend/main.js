@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-const allowedOrigins = ['https://host-app-a4552180b0e3.herokuapp.com/', 'http://localhost:8080'];
+const allowedOrigins = ['https://host-app-a4552180b0e3.herokuapp.com', 'http://localhost:8080'];
 
 // Middleware
 app.use(airbrakeExpress.makeMiddleware(airbrake));
