@@ -48,13 +48,16 @@ exports.registerUser = async (req, res, next) => {
     }
 
     req.body.email = req.body.email.toLowerCase();
+    console.log("check 1")
     const user = await User.create(req.body);
+    console.log("check 2")
     user.password = await hashPassword(user.password);
 
     await user.save();
 
     const token = createToken(user.id);
 
+    console.log("check 3")
     res.status(200).send({
       message: "Registration successful!",
       token,
