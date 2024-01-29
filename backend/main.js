@@ -24,6 +24,7 @@ console.log(process.env.NODE_ENV)
 // Database Initialization
 let sequelize;
 if (process.env.NODE_ENV === 'production') {
+    console.log('connecting production db')
     sequelize = new Sequelize(databaseUrl, {
         dialect: 'postgres',
         dialectOptions: {
@@ -33,6 +34,8 @@ if (process.env.NODE_ENV === 'production') {
             }
         }
     });
+
+    console.log(sequelize);
 } else {
     sequelize = new Sequelize({
         dialect: 'postgres',
