@@ -47,7 +47,6 @@ export default {
       if(this.form.email && this.form.password) {
         try {
           const response = await this.$http.post(process.env.VUE_APP_BASE_URL + '/user/login', this.form);
-          console.log(response);
           const username = response.data.user.first_name + " " + response.data.user.last_name;
 
           sessionStorage.setItem("token", response.data.token);
