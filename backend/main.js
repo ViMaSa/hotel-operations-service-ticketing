@@ -16,11 +16,15 @@ const airbrake = new Airbrake.Notifier({
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const databaseUrl = process.env.DATABASE_URL;
+
+console.log(databaseUrl)
+console.log(process.env.NODE_ENV)
 
 // Database Initialization
 let sequelize;
 if (process.env.NODE_ENV === 'production') {
-    sequelize = new Sequelize(process.env.DATABASE_URL, {
+    sequelize = new Sequelize(databaseUrl, {
         dialect: 'postgres',
         dialectOptions: {
             ssl: {
