@@ -67,6 +67,7 @@ exports.registerUser = async (req, res, next) => {
       },
     });
   } catch (err) {
+    console.error("Error in registerUser:", err.message);
     next(err);
   }
 };
