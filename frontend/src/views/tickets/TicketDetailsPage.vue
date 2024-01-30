@@ -123,7 +123,7 @@
           :ticketId="ticketId"
           modalTitle="Ticket Deletion"
           :modalBodyText="'Are you sure you want to delete ticket number: ' + ticketId + '?'"
-          :url="process.env.VUE_APP_BASE_URL + '/tickets/'+ ticketId"
+          :url="deleteTicketUrl"
         />
       </form>
     </div>
@@ -147,6 +147,7 @@ export default {
       ticketDetails: {},
       submitted: false,
       isEditMode: true,
+      deleteTicketUrl: process.env.VUE_APP_BASE_URL + '/tickets/'+ this.$route.params.ticketId,
     }
   },
   methods: {
