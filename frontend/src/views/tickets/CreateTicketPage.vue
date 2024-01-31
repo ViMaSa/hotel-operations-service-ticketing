@@ -6,6 +6,12 @@
         <h1 class="ms-2">Create New Ticket</h1>
       </div>
       <form class="m-5" @submit.prevent="handleSubmit" novalidate>
+        <div class="d-flex justify-content-between mb-3">
+          <router-link type="button" class="btn btn-secondary" to="/dashboard">
+            <font-awesome-icon icon="fa-table-columns" class="me-2"/>
+            Dashboard
+          </router-link>
+        </div>
         <div class="mb-3">
           <div :class="['form-control', { 'is-invalid': submitted && !form.priority}]">
             <span class="form-check-inline">Priority</span>

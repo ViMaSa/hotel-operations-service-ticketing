@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="card-title mb-0">My Tickets</h5>
-        <button class="btn btn-warning" @click="redirectToCreateTicket" type="button">Create New Ticket</button>
+        <router-link to="/tickets/create" class="btn btn-warning">Create New Ticket</router-link>
       </div>
       <form class="d-flex my-3 px-3">
         <input class="form-control me-2" type="search" placeholder="Search by room number" aria-label="Search">
@@ -65,12 +65,6 @@ export default {
         this.$router.push('/');
       });
     },
-    redirectToViewTicket(ticketId) {
-      this.$router.push('/tickets/' + ticketId)
-    },
-    redirectToCreateTicket() {
-      this.$router.push('/tickets/create')
-    }
   }
 };
 </script>
