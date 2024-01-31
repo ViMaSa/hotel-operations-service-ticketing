@@ -22,14 +22,13 @@
               </tr>
             </thead>
             <tbody v-for="ticket in tickets" :key="ticket.id" class="position-relative">
-              <tr>
+              <tr @click="navigateToTicket(ticket.id)">
                 <th scope="col">{{ ticket.id }}</th>
                 <td scope="col">{{ ticket.priority }}</td>
                 <td scope="col">{{ ticket.room_number }}</td>
                 <td scope="col">{{ ticket.guest_first_name + " " + ticket.guest_last_name }}</td>
                 <td scope="col">{{ ticket.ticket_request_type }}</td>
               </tr>
-              <router-link :to="'/tickets/' + ticket.id" class="stretched-link"></router-link>
             </tbody>
           </table>
         </div>
@@ -64,6 +63,9 @@ export default {
         console.error(err.message);
         this.$router.push('/');
       });
+    },
+    navigateToTicket(ticketId) {
+      this.$router.push(`/tickets/${ticketId}`)
     },
   }
 };

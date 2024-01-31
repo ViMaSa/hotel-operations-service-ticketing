@@ -15,8 +15,8 @@
             <font-awesome-icon icon="fa-pencil" style="color: white;"/>
             Edit
           </button>
-          <div v-else>
-            <button type="submit" class="btn btn-success me-2">
+          <div v-else class="d-flex flex-wrap justify-content-start ps-2">
+            <button type="submit" class="btn btn-success">
               <font-awesome-icon icon="fa-check" style="color: white;"/>
               Save
             </button>
