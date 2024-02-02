@@ -6,17 +6,28 @@
         <h1 class="ms-2">H.O.S.T</h1>
       </div>
       <form class="m-5" @submit.prevent="handleSubmit" novalidate>
-        <div class="mb-3" :class="{ 'has-validation': submitted && !form.email }">
+        <div v-if="errorMessage" class="alert alert-danger"> {{ errorMessage }}</div>
+        <div class="mb-3">
           <label for="email" class="form-label">Email address</label>
-          <input v-model="form.email" type="email" class="form-control" id="email" placeholder="example@email.com" required>
+          <input v-model="form.email"
+            :class="['form-control', { 'is-invalid': submitted && !form.email }]"
+            type="email"
+            id="email"
+            placeholder="example@email.com"
+          required>
           <div v-if="submitted && !form.email" class="invalid-feedback">
             Email is required.
           </div>
         </div>
-        <div class="mb-3" :class="{ 'has-validation': submitted && !form.password}">
+        <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input v-model="form.password" type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Password" required>
-          <div id="passwordHelp" class="form-text"> We'll never share your password with anyone else.</div>
+          <input v-model="form.password"
+            :class="['form-control', { 'is-invalid': submitted && !form.password }]"
+            type="password"
+            id="password"
+            aria-describedby="passwordHelp"
+            placeholder="Password"
+          required>
           <div v-if="submitted && !form.password" class="invalid-feedback">
             Password is required.
           </div>
@@ -39,6 +50,7 @@ export default {
         password: '',
       },
       submitted: false,
+      errorMessage: '',
     }
   },
   methods: {
@@ -56,10 +68,14 @@ export default {
           this.$root.initializeTokenInterval();
           this.$router.push('/dashboard');
         } catch (err) {
-          console.error(err.response ? err.response.data : err.message);
+          this.errorMessage = err.response && err.response.data.message ? err.response.data.message
+          : "An error occurred. Please try again.";
+
+          this.form.email = '';
+          this.form.password = '';
         }
       }
-    }
+    },
   }
 }
 </script>

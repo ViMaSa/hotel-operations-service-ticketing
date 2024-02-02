@@ -66,6 +66,9 @@ export default {
     initializeTokenInterval() {
       this.tokenCheckInterval = setInterval(this.checkTokenExpiry, 5000);
     },
+    clearTokenInterval() {
+      clearInterval(this.tokenCheckInterval);
+    },
     checkTokenExpiry() {
       const token = sessionStorage.getItem("token");
       if(!token) {
@@ -115,8 +118,7 @@ export default {
       this.hideModal();
       clearUser();
       clearInterval(this.tokenCheckInterval);
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("username");
+      sessionStorage.clear();
       this.$router.push('/')
     }
   },

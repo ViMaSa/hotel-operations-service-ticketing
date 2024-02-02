@@ -54,13 +54,13 @@
             placeholder="Password"
             @input="validatePassword"
           required>
+          <div v-if="submitted && !form.password" class="invalid-feedback">
+            Password is required.
+          </div>
           <div v-if="!passwordValidation.valid" class="invalid-feedback">
             <ul>
               <li v-for="error in passwordValidation.errors" :key="error">{{ error }}</li>
             </ul>
-          </div>
-          <div v-if="submitted && !form.password" class="invalid-feedback">
-            Password is required.
           </div>
           <div id="passwordHelp" class="form-text"> We'll never share your password with anyone else.</div>
         </div>

@@ -55,6 +55,7 @@ export default {
 
       this.closeNavbar();
       this.$router.push('/');
+      this.$root.clearTokenInterval();
     },
     closeNavbar() {
       if(this.$refs.navbarCollapse.classList.contains('show')) {
