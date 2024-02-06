@@ -23,6 +23,8 @@ exports.getTicketById = async (req, res, next) => {
 
 exports.createTicket = async (req, res, next) => {
   try {
+    req.body.requestorId = req.user.userId;
+
     const ticket = await Ticket.create(req.body);
     res.status(201).json(ticket);
   } catch (err) {

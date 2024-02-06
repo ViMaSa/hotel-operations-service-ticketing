@@ -103,6 +103,20 @@
             Room number is required.
           </div>
         </div>
+        <div class="input-group mb-3">
+          <span for="requestor" class="input-group-text">Requestor</span>
+          <input v-model="ticketDetails.requestor"
+            type="text"
+            :class="['form-control', { 'is-invalid': submitted && !ticketDetails.requestor }]"
+            id="requestor"
+            placeholder="Requestor Name"
+            disabled
+            required
+          >
+          <div v-if="submitted && !ticketDetails.requestor" class="invalid-feedback">
+            Requestor is required.
+          </div>
+        </div>
         <div class="mb-3">
           <span for="description" class="form-label">Description</span>
           <textarea v-model="ticketDetails.description"
@@ -179,6 +193,8 @@ export default {
         this.ticketDetails.check_in_date &&
         this.ticketDetails.ticket_request_type &&
         this.ticketDetails.description &&
+        this.ticketDetails.requestor &&
+        this.ticketDetails.requestorId &&
         this.ticketDetails.status
     },
     loadTicketDetails(ticketId) {

@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const ticketController = require("../controllers/ticketController.js");
+const { checkJwt } = require("../middleware/jwtMiddleware");
 
 // Create ticket
-router.post("/", ticketController.createTicket);
+router.post("/", checkJwt, ticketController.createTicket);
 
 // Get all tickets route
 router.get("/", ticketController.getAllTickets);

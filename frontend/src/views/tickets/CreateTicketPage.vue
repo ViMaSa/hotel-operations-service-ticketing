@@ -109,6 +109,7 @@ export default {
         check_in_date: new Date(),
         ticket_request_type: '',
         description: '',
+        requestor: '',
         status: 'open',
       },
       submitted: false,
@@ -117,6 +118,8 @@ export default {
   methods: {
     async handleSubmit() {
       this.submitted = true;
+
+      this.form.requestor = sessionStorage.getItem('username');
 
       if (this.isFormValid()) {
         try {
@@ -145,6 +148,7 @@ export default {
         this.form.check_in_date &&
         this.form.ticket_request_type &&
         this.form.description &&
+        this.form.requestor &&
         this.form.status
     },
     redirectBasedOnToken() {
