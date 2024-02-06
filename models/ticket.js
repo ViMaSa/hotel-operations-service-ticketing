@@ -38,6 +38,17 @@ Ticket.init(
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    requestor: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    requestorId: {
+      type: DataTypes.UUID,
+      references: {
+        model: 'users',
+        key: 'id'
+      },
+    },
     status: {
       type: DataTypes.STRING,
       defaultValue: "Open",
