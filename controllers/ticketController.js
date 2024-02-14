@@ -2,7 +2,18 @@ const Ticket = require("../models/ticket.js");
 
 exports.getAllTickets = async (req, res, next) => {
   try {
-    const tickets = await Ticket.findAll();
+    let tickets;
+
+    if(req.query.room_number) {
+      tickets = await Ticket.findAll({
+        where: {
+          room_number: req.query.room_number
+        }
+      })
+    }
+    else {
+      tickets = await Ticket.findAll();
+    }
     res.status(200).json(tickets);
   } catch (err) {
     next(err);
