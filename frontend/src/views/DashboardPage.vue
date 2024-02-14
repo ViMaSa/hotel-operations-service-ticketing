@@ -5,10 +5,22 @@
         <h5 class="card-title mb-0">My Tickets</h5>
         <router-link to="/tickets/create" class="btn btn-warning">Create New Ticket</router-link>
       </div>
-      <form class="d-flex my-3 px-3">
-        <input class="form-control me-2" type="search" placeholder="Search by room number" aria-label="Search">
+      <form class="d-flex my-3 px-3" @submit.prevent="handleSubmit">
+        <input v-model="form.searchValue"
+          class="form-control me-2"
+          type="number"
+          id="searchValue"
+          placeholder="Search by room number"
+          aria-label="Search"
+        >
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+      <div class="px-3 filter-group" v-if="this.filterValue">
+        <div class="d-inline-block p-1 rounded bg-success">
+          {{ this.filterValue }}
+          <button @click="clearFilter" class="badge p-1 border-0 bg-success">X</button>
+        </div>
+      </div>
       <div class="card-body p-0">
         <div class="table-container table-responsive-sm container-fluid p-0">
           <table class="table table-hover">
@@ -42,13 +54,50 @@ export default {
   name: "DashboardPage",
   data () {
     return {
-      tickets: []
+      form: {
+        searchValue: '',
+      },
+      filterValue: '',
+      tickets: [],
     };
   },
   created() {
     this.loadTickets();
   },
   methods: {
+    clearFilter() {
+      this.filterValue = '';
+      this.loadTickets();
+    },
+    setFilter(value) {
+      this.filterValue = value;
+    },
+    handleSubmit() {
+      this.setFilter(this.form.searchValue);
+      this.form.searchValue = '';
+
+      if(this.filterValue) {
+        this.getFilteredTickets();
+      }
+      else {
+        this.loadTickets();
+      }
+    },
+    getFilteredTickets() {
+      const token = sessionStorage.getItem("token");
+
+      this.$http.get(process.env.VUE_APP_BASE_URL + '/tickets?room_number=' + this.filterValue , {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }).then(response => {
+        const dataArray = Object.values(response.data);
+        this.tickets = dataArray.sort((a,b) => b.id - a.id)
+      }).catch(err => {
+        console.error(err.message);
+        this.$router.push('/');
+      });
+    },
     loadTickets() {
       const token = sessionStorage.getItem("token");
 
