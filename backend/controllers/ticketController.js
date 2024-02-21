@@ -36,6 +36,10 @@ exports.createTicket = async (req, res, next) => {
   try {
     req.body.requestorId = req.user.userId;
 
+    if (Date(req.body.check_in_date) > Date(req.body.check_out_date)) {
+      throw new Error("Checkout date must be after check-in date.");
+    }
+
     const ticket = await Ticket.create(req.body);
     res.status(201).json(ticket);
   } catch (err) {
@@ -45,6 +49,10 @@ exports.createTicket = async (req, res, next) => {
 
 exports.updateTicket = async (req, res, next) => {
   try {
+    if (Date(req.body.check_in_date) > Date(req.body.check_out_date)) {
+      throw new Error("Checkout date must be after check-in date.");
+    }
+
     const ticket = await Ticket.update(req.body, {
       where: { id: req.params.id },
     });

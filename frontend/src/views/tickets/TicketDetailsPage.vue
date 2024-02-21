@@ -103,18 +103,40 @@
             Room number is required.
           </div>
         </div>
-        <div class="input-group mb-3">
-          <span for="requestor" class="input-group-text">Requestor</span>
-          <input v-model="ticketDetails.requestor"
-            type="text"
-            :class="['form-control', { 'is-invalid': submitted && !ticketDetails.requestor }]"
-            id="requestor"
-            placeholder="Requestor Name"
-            disabled
-            required
-          >
-          <div v-if="submitted && !ticketDetails.requestor" class="invalid-feedback">
-            Requestor is required.
+        <div class="mb-3">
+          <span for="check_in_date" class="form-label">Check-in Date</span>
+          <VueDatePicker
+            v-model="ticketDetails.check_in_date"
+            :class="{ 'is-invalid': submitted && !ticketDetails.check_in_date }"
+            :month-change-on-scroll="false"
+            :start-date="ticketDetails.check_in_date || new Date()"
+            :enable-time-picker="false"
+            :clearable="false"
+            :max-date="ticketDetails.check_out_date"
+            :state="ticketDetails.check_in_date ? null : false"
+            :disabled="isEditMode"
+            placeholder="Select Date"
+          ></VueDatePicker>
+          <div v-if="submitted && !form.check_in_date" class="invalid-feedback">
+            Check-in date is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <span for="check_out_date" class="form-label">Check-out Date</span>
+          <VueDatePicker
+            v-model="ticketDetails.check_out_date"
+            :class="{ 'is-invalid': submitted && !ticketDetails.check_out_date }"
+            :month-change-on-scroll="false"
+            :start-date="ticketDetails.check_out_date || new Date()"
+            :enable-time-picker="false"
+            :clearable="false"
+            :min-date="ticketDetails.check_in_date"
+            placeholder="Select Date"
+            :state="ticketDetails.check_out_date ? null : false"
+            :disabled="isEditMode"
+          ></VueDatePicker>
+          <div v-if="submitted && !form.check_out_date" class="invalid-feedback">
+            Check-out date is required.
           </div>
         </div>
         <div class="mb-3">
@@ -128,6 +150,20 @@
           ></textarea>
           <div v-if="submitted && !ticketDetails.description" class="invalid-feedback">
             Issue description is required.
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <span for="requestor" class="input-group-text">Requestor</span>
+          <input v-model="ticketDetails.requestor"
+            type="text"
+            :class="['form-control', { 'is-invalid': submitted && !ticketDetails.requestor }]"
+            id="requestor"
+            placeholder="Requestor Name"
+            disabled
+            required
+          >
+          <div v-if="submitted && !ticketDetails.requestor" class="invalid-feedback">
+            Requestor is required.
           </div>
         </div>
         <div class="mb-3">
@@ -146,6 +182,9 @@
 
 <script>
 import ConfirmationModal from "@/components/ConfirmationModal.vue";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 
 export default {
   name: "TicketDetailsPage",
@@ -154,6 +193,7 @@ export default {
   },
   components: {
     ConfirmationModal,
+    VueDatePicker,
   },
   data() {
     return {
@@ -191,6 +231,7 @@ export default {
         this.ticketDetails.guest_last_name &&
         this.ticketDetails.room_number &&
         this.ticketDetails.check_in_date &&
+        this.ticketDetails.check_out_date &&
         this.ticketDetails.ticket_request_type &&
         this.ticketDetails.description &&
         this.ticketDetails.requestor &&

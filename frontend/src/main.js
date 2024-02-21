@@ -3,6 +3,8 @@ import axios from "axios";
 import router from "./router";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.css";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 import { createApp } from "vue"
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -31,6 +33,7 @@ library.add(
 const app = createApp(App);
 
 app.component("font-awesome-icon", FontAwesomeIcon);
+app.component('VueDatePicker', VueDatePicker);
 app.use(router);
 
 app.config.globalProperties.$http = axios;

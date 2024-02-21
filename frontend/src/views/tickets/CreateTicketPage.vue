@@ -80,6 +80,40 @@
           </div>
         </div>
         <div class="mb-3">
+          <span for="check_in_date" class="form-label">Check-in Date</span>
+          <VueDatePicker
+            v-model="form.check_in_date"
+            :class="{ 'is-invalid': submitted && !form.check_in_date }"
+            :month-change-on-scroll="false"
+            :start-date="form.check_in_date || new Date()"
+            :enable-time-picker="false"
+            :clearable="false"
+            :max-date="form.check_out_date"
+            :state="form.check_in_date ? null : false"
+            placeholder="Select Date"
+          ></VueDatePicker>
+          <div v-if="submitted && !form.check_in_date" class="invalid-feedback">
+            Check-in date is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <span for="check_out_date" class="form-label">Check-out Date</span>
+          <VueDatePicker
+            v-model="form.check_out_date"
+            :class="{ 'is-invalid': submitted && !form.check_out_date }"
+            :month-change-on-scroll="false"
+            :start-date="form.check_out_date || new Date()"
+            :enable-time-picker="false"
+            :clearable="false"
+            :min-date="form.check_in_date"
+            placeholder="Select Date"
+            :state="form.check_out_date ? null : false"
+          ></VueDatePicker>
+          <div v-if="submitted && !form.check_out_date" class="invalid-feedback">
+            Check-out date is required.
+          </div>
+        </div>
+        <div class="mb-3">
           <span for="description" class="form-label">Description</span>
           <textarea v-model="form.description"
             :class="['form-control', { 'is-invalid': submitted && !form.description }]"
@@ -97,8 +131,14 @@
 </template>
 
 <script>
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 export default {
   name: "CreateTicketPage",
+  components: {
+    VueDatePicker,
+  },
   data() {
     return {
       form: {
@@ -106,7 +146,8 @@ export default {
         guest_first_name: '',
         guest_last_name: '',
         room_number: '',
-        check_in_date: new Date(),
+        check_in_date: null,
+        check_out_date: null,
         ticket_request_type: '',
         description: '',
         requestor: '',
@@ -146,6 +187,7 @@ export default {
         this.form.guest_last_name &&
         this.form.room_number &&
         this.form.check_in_date &&
+        this.form.check_out_date &&
         this.form.ticket_request_type &&
         this.form.description &&
         this.form.requestor &&
