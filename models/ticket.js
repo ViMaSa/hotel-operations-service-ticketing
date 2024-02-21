@@ -30,6 +30,10 @@ Ticket.init(
       type: DataTypes.DATE,
       allowNull: false,
     },
+    check_out_date: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
     ticket_request_type: {
       type: DataTypes.STRING,
       allowNull: false,
